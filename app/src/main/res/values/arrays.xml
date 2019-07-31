@@ -37,4 +37,11 @@
         <item> 2</item>
     </string-array>
 
+    //activity type
+    <string-array name="entryvalues_list_activities">
+        <item>  Ходьба</item>
+        <item> Бег</item>
+        <item> Велосипед</item>
+    </string-array>
+
 </resources>

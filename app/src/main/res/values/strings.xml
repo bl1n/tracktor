@@ -3,6 +3,8 @@
     <string name="timeLabel">Время:</string>
     <string name="distanceLabel">Расстояние:</string>
     <string name="speedLabel">Скорость:</string>
+    <string name="energyLabel">Затраченная энергия:</string>
+    <string name="activityTypeLabel">Вид деятельности:</string>
     <string name="start">Старт</string>
     <string name="end">Конец</string>
     <string name="stop">Стоп</string>

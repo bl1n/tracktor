@@ -64,6 +64,48 @@
             tools:text="2412 м." />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activityTypeLabel" />
+
+        <Spinner
+            android:id="@+id/tvActivityType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/entryvalues_list_activities"
+            android:paddingEnd="0dp"
+            android:paddingStart="4dp"
+            tools:text="2412 м." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/energyLabel" />
+
+        <TextView
+            android:id="@+id/tvEnergy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="0dp"
+            android:paddingStart="4dp"
+            tools:text="2412 м." />
+    </LinearLayout>
+
+
     <ImageView
         android:id="@+id/ivScreenshot"
         android:layout_width="match_parent"

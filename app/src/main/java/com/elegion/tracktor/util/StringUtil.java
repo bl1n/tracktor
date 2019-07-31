@@ -17,6 +17,9 @@ public class StringUtil {
     public static String getSpeedText(double value) {
         return round(value, 0) + " м/c";
     }
+    public static String getEnergyText(double value) {
+        return round(value, 0) + " кКал";
+    }
 
     public static String round(double value, int places) {
         return String.format("%." + places + "f", value);
