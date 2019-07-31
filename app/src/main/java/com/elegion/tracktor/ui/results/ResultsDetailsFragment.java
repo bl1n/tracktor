@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import toothpick.Scope;
 import toothpick.Toothpick;
@@ -57,6 +59,10 @@ public class ResultsDetailsFragment extends Fragment {
     TextView mEnergy;
     @BindView(R.id.tvDate)
     TextView tvDate;
+    @BindView(R.id.comment_btn)
+    ImageButton commentBtn;
+    @BindView(R.id.comment_text)
+    TextView commentText;
 
     private Bitmap mImage;
 
@@ -110,9 +116,11 @@ public class ResultsDetailsFragment extends Fragment {
             if (aBoolean)
                 getActivity().onBackPressed();
         });
-        mViewModel.getEnergy().observe(this, s -> mEnergy.setText(s));
+        mViewModel.getEnergy().observe(this, s -> mEnergy.setText(s));// TODO: 31.07.2019  o kk
+        mViewModel.getComment().observe(this, s -> commentText.setText(s));
 
 
+        mViewModel.updateTrackComment(mTrackId, "Hello!");// TODO: 31.07.2019 dialog
         mViewModel.loadTrack(mTrackId);
         mActivityTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -130,6 +138,10 @@ public class ResultsDetailsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_details_fragment, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @OnClick(R.id.comment_btn)
+    public void onViewClicked() {
     }
 
     @Override

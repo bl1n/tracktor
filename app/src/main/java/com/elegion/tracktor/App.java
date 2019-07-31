@@ -5,6 +5,7 @@ import android.app.Application;
 import com.elegion.tracktor.di.AppModule;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import toothpick.Scope;
 import toothpick.Toothpick;
 import toothpick.configuration.Configuration;
@@ -20,6 +21,7 @@ public class App extends Application {
         super.onCreate();
 
         Realm.init(this);
+
 
         Toothpick.setConfiguration(Configuration.forProduction().disableReflection());
         MemberInjectorRegistryLocator.setRootRegistry(new com.elegion.tracktor.MemberInjectorRegistry());

@@ -34,11 +34,15 @@ public class ResultsViewModel extends ViewModel {
 
     private MutableLiveData<String> mEnergy = new MutableLiveData<>();
 
+    private MutableLiveData<String> mComment = new MutableLiveData<>();
+
+
     public ResultsViewModel() {
         final Scope scope = Toothpick.openScopes(App.class, this);
         scope.installModules(new RepositoryModule());
         Toothpick.inject(this, scope);
         deleted.postValue(false);
+
     }
 
     //tracks
@@ -80,10 +84,18 @@ public class ResultsViewModel extends ViewModel {
     public void loadEnergy(long trackId, int activityType, SharedPreferences preferences) {
         Track track = mRepository.getItem(trackId);
         double weight = Double.parseDouble(preferences.getString("weight", "1"));
-
         double energy = track.getDuration() * (activityType+1) * (weight / 100);
         mEnergy.postValue(StringUtil.getEnergyText(energy));
+    }
 
+    public void updateTrackComment(long trackId, String string){
+        Track track = mRepository.getItem(trackId);
+        track.setComment(string);
+        mRepository.updateItem(track);
+        mComment.postValue(track.getComment());
+    }
 
+    public MutableLiveData<String> getComment() {
+        return mComment;
     }
 }

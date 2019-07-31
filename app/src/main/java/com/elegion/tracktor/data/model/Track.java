@@ -21,6 +21,16 @@ public class Track extends RealmObject {
 
     private String imageBase64;
 
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
