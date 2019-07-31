@@ -1,5 +1,8 @@
 package com.elegion.tracktor.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class StringUtil {
@@ -19,6 +22,11 @@ public class StringUtil {
     }
     public static String getEnergyText(double value) {
         return round(value, 0) + " кКал";
+    }
+    public static String getDateText(Date date) {
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(date);
     }
 
     public static String round(double value, int places) {
