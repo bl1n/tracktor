@@ -25,4 +25,16 @@
         <item>3600</item>
     </string-array>
 
+    //sex ent
+    <string-array name="entries_list_preference_sex">
+        <item>Мужской</item>
+        <item>Женский</item>
+    </string-array>
+
+    //sex val
+    <string-array name="entryvalues_list_preference_sex">
+        <item>  1</item>
+        <item> 2</item>
+    </string-array>
+
 </resources>

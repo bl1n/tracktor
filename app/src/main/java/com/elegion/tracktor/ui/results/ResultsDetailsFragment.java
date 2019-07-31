@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
-import com.elegion.tracktor.data.RealmRepository;
-import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.di.ModelsModule;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.elegion.tracktor.util.StringUtil;
@@ -29,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
@@ -45,6 +44,9 @@ public class ResultsDetailsFragment extends Fragment {
     TextView mDistanceText;
     @BindView(R.id.ivScreenshot)
     ImageView mScreenshotImage;
+    @BindView(R.id.tvSpeed)
+    TextView mSpeed;
+    Unbinder unbinder;
 
     private Bitmap mImage;
 
@@ -65,7 +67,9 @@ public class ResultsDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fr_result_detail, container, false);
+        View view = inflater.inflate(R.layout.fr_result_detail, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -87,6 +91,10 @@ public class ResultsDetailsFragment extends Fragment {
             mDistanceText.setText(distance);
             mImage = ScreenshotMaker.fromBase64(track.getImageBase64());
             mScreenshotImage.setImageBitmap(mImage);
+
+            final double speed = track.getDistance() / track.getDuration();
+            mSpeed.setText(StringUtil.getSpeedText(speed));
+
         });
 
         mViewModel.loadTrack(mTrackId);
@@ -111,13 +119,19 @@ public class ResultsDetailsFragment extends Fragment {
             startActivity(Intent.createChooser(intent, "Результаты маршрута"));
             return true;
         } else if (item.getItemId() == R.id.actionDelete) {
-            mViewModel.isDeleted().observe(this,aBoolean -> {
-                if(aBoolean)
+            mViewModel.isDeleted().observe(this, aBoolean -> {
+                if (aBoolean)
                     getActivity().onBackPressed();
             });
             mViewModel.deleteTrack(mTrackId);
             return true;
         } else
             return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
