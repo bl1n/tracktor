@@ -96,6 +96,11 @@ public class ResultsDetailsFragment extends Fragment {
             mSpeed.setText(StringUtil.getSpeedText(speed));
 
         });
+        mViewModel.isDeleted().observe(this, aBoolean -> {
+            if (aBoolean)
+                getActivity().onBackPressed();
+        });
+
 
         mViewModel.loadTrack(mTrackId);
     }
@@ -119,10 +124,6 @@ public class ResultsDetailsFragment extends Fragment {
             startActivity(Intent.createChooser(intent, "Результаты маршрута"));
             return true;
         } else if (item.getItemId() == R.id.actionDelete) {
-            mViewModel.isDeleted().observe(this, aBoolean -> {
-                if (aBoolean)
-                    getActivity().onBackPressed();
-            });
             mViewModel.deleteTrack(mTrackId);
             return true;
         } else
