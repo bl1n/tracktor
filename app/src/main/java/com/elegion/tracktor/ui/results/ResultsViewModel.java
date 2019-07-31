@@ -92,7 +92,7 @@ public class ResultsViewModel extends ViewModel {
         Track track = mRepository.getItem(trackId);
         track.setComment(string);
         mRepository.updateItem(track);
-        mComment.postValue(track.getComment());
+        mTrack.postValue(track);
     }
 
     public MutableLiveData<String> getComment() {

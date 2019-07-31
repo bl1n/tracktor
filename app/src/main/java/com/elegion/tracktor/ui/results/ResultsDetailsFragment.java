@@ -108,19 +108,18 @@ public class ResultsDetailsFragment extends Fragment {
             mImage = ScreenshotMaker.fromBase64(track.getImageBase64());
             mScreenshotImage.setImageBitmap(mImage);
             tvDate.setText(StringUtil.getDateText(track.getDate()));
-
-            final double speed = track.getDistance() / track.getDuration();
-            mSpeed.setText(StringUtil.getSpeedText(speed));
+            mSpeed.setText(StringUtil.getSpeedText(track.getDistance() / track.getDuration()));
+            commentText.setText(track.getComment());
         });
         mViewModel.isDeleted().observe(this, aBoolean -> {
-            if (aBoolean)
+            if (aBoolean) {
                 getActivity().onBackPressed();
+            }
         });
-        mViewModel.getEnergy().observe(this, s -> mEnergy.setText(s));// TODO: 31.07.2019  o kk
-        mViewModel.getComment().observe(this, s -> commentText.setText(s));
+        mViewModel.getEnergy().observe(this, s -> mEnergy.setText(s)); // TODO: 31.07.2019  o kk
 
-
-        mViewModel.updateTrackComment(mTrackId, "Hello!");// TODO: 31.07.2019 dialog
+        // TODO: 31.07.2019 dialog
+        mViewModel.updateTrackComment(mTrackId, "Hello again!");
         mViewModel.loadTrack(mTrackId);
         mActivityTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
