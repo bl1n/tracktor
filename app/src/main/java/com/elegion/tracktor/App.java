@@ -30,4 +30,6 @@ public class App extends Application {
         sAppScope = Toothpick.openScope(App.class);
         sAppScope.installModules(new SmoothieApplicationModule(this), new AppModule(this));
     }
+
+
 }

@@ -47,4 +47,5 @@
     <string name="ok">Понятно</string>
     <string name="back_off">Приложение не может работать без доступа к местоположению</string>
     <string name="notify_info">Время: %s\nРасстояние: %s "</string>
+    <string name="input_comment">Введите комментарий</string>
 </resources>

@@ -34,13 +34,13 @@ public class ResultsViewModel extends ViewModel {
 
     private MutableLiveData<String> mEnergy = new MutableLiveData<>();
 
-    private MutableLiveData<String> mComment = new MutableLiveData<>();
+    private final Scope mScope;
 
 
     public ResultsViewModel() {
-        final Scope scope = Toothpick.openScopes(App.class, this);
-        scope.installModules(new RepositoryModule());
-        Toothpick.inject(this, scope);
+        mScope = Toothpick.openScopes(App.class, this);
+        mScope.installModules(new RepositoryModule());
+        Toothpick.inject(this, mScope);
         deleted.postValue(false);
 
     }
@@ -95,7 +95,10 @@ public class ResultsViewModel extends ViewModel {
         mTrack.postValue(track);
     }
 
-    public MutableLiveData<String> getComment() {
-        return mComment;
+
+    @Override
+    protected void onCleared() {
+        Toothpick.closeScope(mScope);
+        super.onCleared();
     }
 }

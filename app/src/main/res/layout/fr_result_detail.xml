@@ -153,14 +153,17 @@
 
         <ImageButton
             android:id="@+id/comment_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round" />
+            android:src="@drawable/ic_comment"
+            android:layout_weight="0.5"
+            android:contentDescription="@string/input_comment"/>
 
         <TextView
             android:id="@+id/comment_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"/>
 
     </LinearLayout>
 
