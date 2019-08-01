@@ -122,7 +122,7 @@ public class ResultsDetailsFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        mViewModel.getEnergy().observe(this, s -> mEnergy.setText(s)); // TODO: 31.07.2019  o kk
+        mViewModel.getEnergy().observe(this, s -> mEnergy.setText(s));
 
         // TODO: 31.07.2019 dialog
 
