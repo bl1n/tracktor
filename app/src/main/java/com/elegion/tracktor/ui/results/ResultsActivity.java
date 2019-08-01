@@ -6,11 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.elegion.tracktor.common.SingleFragmentActivity;
+import com.elegion.tracktor.event.OpenResultEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * `
  */
-public class ResultsActivity extends SingleFragmentActivity implements ResultsFragment.OnItemClickListener {
+public class ResultsActivity extends SingleFragmentActivity {
     public static final String RESULT_ID = "RESULT_ID";
     public static final long LIST_ID = -1L;
 
@@ -31,9 +36,21 @@ public class ResultsActivity extends SingleFragmentActivity implements ResultsFr
             return ResultsFragment.newInstance();
     }
 
-    //eventbus ?
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onOpenResultEvent(OpenResultEvent event) {
+        changeFragment(ResultsDetailsFragment.newInstance(event.getTrackId()));
+    }
+
     @Override
-    public void onClick(long trackId) {
-        changeFragment(ResultsDetailsFragment.newInstance(trackId));
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }

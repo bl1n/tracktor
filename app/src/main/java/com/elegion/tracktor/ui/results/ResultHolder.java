@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
+import com.elegion.tracktor.event.OpenResultEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * @author Azret Magometov
@@ -33,18 +36,12 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         mTrackId = track.getId();
         mDateText.setText(String.valueOf(mTrackId));
         mDistanceText.setText(String.valueOf(track.getDistance()));
-    }
-
-    public void setListener(final ResultsFragment.OnItemClickListener listener) {
-        mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != listener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    listener.onClick(mTrackId);
-                }
-            }
+        mView.setOnClickListener(v -> {
+            EventBus.getDefault().post(new OpenResultEvent(track.getId()));
         });
     }
+
+
+
+
 }

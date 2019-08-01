@@ -14,7 +14,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.elegion.tracktor.R;
+import com.elegion.tracktor.event.OpenResultEvent;
 import com.elegion.tracktor.util.CustomViewModelFactory;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +32,6 @@ public class ResultsFragment extends Fragment {
     TextView tvEmptyList;
     Unbinder unbinder;
 
-    private OnItemClickListener mListener;
     private ResultsViewModel mResultsViewModel;
     private ResultsAdapter mResultsAdapter;
 
@@ -39,16 +42,6 @@ public class ResultsFragment extends Fragment {
         return new ResultsFragment();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnItemClickListener) {
-            mListener = (OnItemClickListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnItemClickListener");
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +66,7 @@ public class ResultsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mResultsAdapter = new ResultsAdapter(mListener);
+        mResultsAdapter = new ResultsAdapter();
         mResultsViewModel.getTracks().observe(this, tracks -> {
             if (tracks !=null && tracks.size()>0 )
                 mResultsAdapter.submitList(tracks);
@@ -86,12 +79,15 @@ public class ResultsFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mResultsAdapter);
+
+
     }
+
+
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -100,7 +96,4 @@ public class ResultsFragment extends Fragment {
         unbinder.unbind();
     }
 
-    public interface OnItemClickListener {
-        void onClick(long trackId);
-    }
 }
