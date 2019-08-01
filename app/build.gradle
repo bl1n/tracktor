@@ -4,7 +4,7 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.elegion.tracktor"
+        applicationId "com.elegion.tracktor1"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1

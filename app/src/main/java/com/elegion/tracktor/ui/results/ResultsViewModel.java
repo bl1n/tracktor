@@ -84,7 +84,7 @@ public class ResultsViewModel extends ViewModel {
     public void loadEnergy(long trackId, int activityType, SharedPreferences preferences) {
         Track track = mRepository.getItem(trackId);
         double weight = Double.parseDouble(preferences.getString("weight", "1"));
-        double energy = track.getDuration() * (activityType+1) * (weight / 100);
+        double energy = track.getDuration() * (activityType+1) *weight;
         mEnergy.postValue(StringUtil.getEnergyText(energy));
     }
 
