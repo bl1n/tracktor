@@ -49,4 +49,5 @@
     <string name="notify_info">Время: %s\nРасстояние: %s "</string>
     <string name="input_comment">Введите комментарий</string>
     <string name="empty_list">Список пуст</string>
+    <string name="IdTextLabel">Id:</string>
 </resources>

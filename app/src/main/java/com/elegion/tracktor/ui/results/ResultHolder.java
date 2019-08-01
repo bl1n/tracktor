@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.event.OpenResultEvent;
+import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -16,15 +17,20 @@ import org.greenrobot.eventbus.EventBus;
 public class ResultHolder extends RecyclerView.ViewHolder {
 
     private View mView;
-    private TextView mDateText;
+    private TextView mIdText;
     private TextView mDistanceText;
+    private TextView mDuration;
+    private TextView mDate;
+
     private long mTrackId;
 
     public ResultHolder(View view) {
         super(view);
         mView = view;
-        mDateText = view.findViewById(R.id.tv_date);
+        mIdText = view.findViewById(R.id.tv_id);
         mDistanceText = view.findViewById(R.id.tv_distance);
+        mDate = view.findViewById(R.id.tv_date);
+        mDuration = view.findViewById(R.id.tv_duration);
     }
 
     @Override
@@ -34,8 +40,11 @@ public class ResultHolder extends RecyclerView.ViewHolder {
 
     public void bind(Track track) {
         mTrackId = track.getId();
-        mDateText.setText(String.valueOf(mTrackId));
-        mDistanceText.setText(String.valueOf(track.getDistance()));
+        mIdText.setText(String.valueOf(mTrackId));
+        mDistanceText.setText(StringUtil.getDistanceText(track.getDistance()));
+        mDate.setText(StringUtil.getDateText(track.getDate()));
+        mDuration.setText(StringUtil.getTimeText(track.getDuration()));
+
         mView.setOnClickListener(v -> {
             EventBus.getDefault().post(new OpenResultEvent(track.getId()));
         });
