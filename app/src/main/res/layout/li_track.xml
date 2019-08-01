@@ -77,6 +77,20 @@
             android:textAppearance="?attr/textAppearanceListItem" />
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/sub_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/distanceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/view_vertical_padding_small"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+
+    </LinearLayout>
 
 
 

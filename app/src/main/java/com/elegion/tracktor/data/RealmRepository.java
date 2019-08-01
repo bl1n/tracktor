@@ -87,10 +87,10 @@ public class RealmRepository implements IRepository<Track> {
         track.setImageBase64(base64image);
         track.setDate(new Date());
         track.setComment("Введите комментарий");
+        track.setExpanded(false);
 //        mRealm.commitTransaction();
 //        return sPrimaryId.longValue();
 
         return insertItem(track);
-
     }
 }

@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
+import com.elegion.tracktor.event.ExpandViewEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
 
@@ -39,7 +42,12 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ResultHolder holder, int position) {
-        holder.bind(getItem(position));
+        Track track = getItem(position);
+        holder.bind(track);
+        holder.itemView.setOnClickListener(v->{
+            EventBus.getDefault().post(new ExpandViewEvent(track.getId()));
+            notifyItemChanged(position);
+        });
     }
 
 }
