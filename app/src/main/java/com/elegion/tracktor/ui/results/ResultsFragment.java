@@ -11,18 +11,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.elegion.tracktor.R;
-import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.util.CustomViewModelFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class ResultsFragment extends Fragment {
 
     @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
+    @BindView(R.id.tv_empty_list)
+    TextView tvEmptyList;
+    Unbinder unbinder;
 
     private OnItemClickListener mListener;
     private ResultsViewModel mResultsViewModel;
@@ -55,7 +59,9 @@ public class ResultsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fr_results, container, false);
+        View view = inflater.inflate(R.layout.fr_results, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -68,7 +74,14 @@ public class ResultsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mResultsAdapter = new ResultsAdapter(mListener);
-        mResultsViewModel.getTracks().observe(this, tracks -> mResultsAdapter.submitList(tracks));
+        mResultsViewModel.getTracks().observe(this, tracks -> {
+            if (tracks !=null && tracks.size()>0 )
+                mResultsAdapter.submitList(tracks);
+            else{
+                mRecyclerView.setVisibility(View.GONE);
+                tvEmptyList.setVisibility(View.VISIBLE);
+            }
+        });
         mResultsViewModel.loadTracks();
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -79,6 +92,12 @@ public class ResultsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     public interface OnItemClickListener {
