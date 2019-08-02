@@ -23,6 +23,8 @@ public class Track extends RealmObject {
 
     private String comment;
 
+
+
     private boolean expanded;
 
     public boolean isExpanded() {

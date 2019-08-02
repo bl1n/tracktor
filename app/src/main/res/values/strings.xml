@@ -50,4 +50,6 @@
     <string name="input_comment">Введите комментарий</string>
     <string name="empty_list">Список пуст</string>
     <string name="IdTextLabel">Id:</string>
+    <string name="speedTextLabel">Скорость:</string>
+    <string name="tv_comment">Комментарий</string>
 </resources>

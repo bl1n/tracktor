@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.elegion.tracktor.R;
+import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
 import com.elegion.tracktor.event.OpenResultEvent;
 import com.elegion.tracktor.util.CustomViewModelFactory;
@@ -103,6 +104,7 @@ public class ResultsFragment extends Fragment {
         mResultsViewModel.onExpandedStateChange(event);
         Log.d(TAG, "changeExpand: " + event.getTrackId());
     }
+
 
 
     @Override

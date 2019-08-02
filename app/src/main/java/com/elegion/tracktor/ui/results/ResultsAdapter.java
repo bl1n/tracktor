@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
+import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
 
@@ -44,10 +46,17 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
     public void onBindViewHolder(@NonNull ResultHolder holder, int position) {
         Track track = getItem(position);
         holder.bind(track);
+
+        holder.itemView.findViewById(R.id.btn_delete).setOnClickListener(v -> {
+            EventBus.getDefault().post(new DeleteTrackEvent(track.getId()));
+            notifyDataSetChanged();
+        });
         holder.itemView.setOnClickListener(v->{
             EventBus.getDefault().post(new ExpandViewEvent(track.getId()));
             notifyItemChanged(position);
         });
     }
+
+
 
 }

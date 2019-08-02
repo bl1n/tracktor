@@ -9,6 +9,7 @@ import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.di.RepositoryModule;
+import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
 import com.elegion.tracktor.util.StringUtil;
 
@@ -44,6 +45,7 @@ public class ResultsViewModel extends ViewModel {
 
 
     public ResultsViewModel() {
+        EventBus.getDefault().register(this);
         mScope = Toothpick.openScopes(App.class, this);
         mScope.installModules(new RepositoryModule());
         Toothpick.inject(this, mScope);
@@ -108,12 +110,18 @@ public class ResultsViewModel extends ViewModel {
         Log.d("Debug", "onExpandedStateChange: " + track.isExpanded());
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deleteTrack(DeleteTrackEvent event){
+        mRepository.deleteItem(event.getTrackId());
+    }
 
     @Override
     protected void onCleared() {
+        EventBus.getDefault().unregister(this);
         Toothpick.closeScope(mScope);
         super.onCleared();
     }
+
     public void createRandomTrack(){
         mRepository.createAndInsertTrackFrom(123,123.00,"");
 
