@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
+import com.elegion.tracktor.event.ChangeCommentEvent;
 import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
 
@@ -55,6 +56,18 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
             EventBus.getDefault().post(new ExpandViewEvent(track.getId()));
             notifyItemChanged(position);
         });
+
+        holder.itemView.findViewById(R.id.btn_change_comment).setOnClickListener(v->{
+            EventBus.getDefault().post(new ChangeCommentEvent(track.getComment(), track.getId()));
+            notifyItemChanged(position);
+        });
+//        mChangeCommentBtn.setOnClickListener(v -> {
+//            // TODO: 02.08.2019
+//        });
+//
+//        mShareBtn.setOnClickListener(v -> {
+//
+//        });
     }
 
 

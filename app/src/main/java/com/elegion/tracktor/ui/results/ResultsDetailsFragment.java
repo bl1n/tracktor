@@ -29,8 +29,11 @@ import android.widget.TextView;
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.di.ModelsModule;
+import com.elegion.tracktor.event.SaveActivityTypeComment;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.elegion.tracktor.util.StringUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
@@ -186,6 +189,7 @@ public class ResultsDetailsFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+//        EventBus.getDefault().post(new SaveActivityTypeComment(mCommentText.getText().toString(), mActivityTypeSpinner.getSelectedItem()));
         super.onDestroyView();
         unbinder.unbind();
     }

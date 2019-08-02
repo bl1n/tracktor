@@ -103,17 +103,18 @@ public class ResultsViewModel extends ViewModel {
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onExpandedStateChange(ExpandViewEvent event){
         Track track = mRepository.getItem(event.getTrackId());
         track.setExpanded(!track.isExpanded());
         mRepository.updateItem(track);
-        Log.d("Debug", "onExpandedStateChange: " + track.isExpanded());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deleteTrack(DeleteTrackEvent event){
         mRepository.deleteItem(event.getTrackId());
     }
+
 
     @Override
     protected void onCleared() {

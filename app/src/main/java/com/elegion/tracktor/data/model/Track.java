@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Track extends RealmObject {
 
-    @PrimaryKey
     private long id;
 
     private Date date;

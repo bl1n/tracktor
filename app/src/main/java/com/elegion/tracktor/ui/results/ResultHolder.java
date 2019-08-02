@@ -52,9 +52,7 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         mEnergyText = view.findViewById(R.id.tv_energy);
         mSpeedText = view.findViewById(R.id.tv_speed);
         mAtivityText = view.findViewById(R.id.tv_activityType);
-        mCommentText = view.findViewById(R.id.comment_text);
-        mChangeCommentBtn = view.findViewById(R.id.btn_change_comment);
-        mShareBtn = view.findViewById(R.id.btn_share);
+        mCommentText = view.findViewById(R.id.tv_comment);
 
     }
 
@@ -68,25 +66,22 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         mDate.setText(StringUtil.getDateText(track.getDate()));
         mDuration.setText(StringUtil.getTimeText(track.getDuration()));
 
+        mCommentText.setText(track.getComment());
+        mSpeedText.setText(StringUtil.getSpeedText(track.getDistance() / track.getDuration()));
+
         boolean expanded = track.isExpanded();
         mLayout.setVisibility(expanded ? View.VISIBLE : View.GONE);
-        mView.setOnClickListener(v -> {
-            EventBus.getDefault().post(new ExpandViewEvent(track.getId()));
-        });
+
+
+//        mView.setOnClickListener(v -> {
+//            EventBus.getDefault().post(new ExpandViewEvent(track.getId()));
+//        });
 
         mView.setOnLongClickListener(v -> {
             EventBus.getDefault().post(new OpenResultEvent(track.getId()));
             return false;
         });
 
-
-        mChangeCommentBtn.setOnClickListener(v -> {
-            // TODO: 02.08.2019
-        });
-
-        mShareBtn.setOnClickListener(v -> {
-
-        });
 
     }
 

@@ -1,5 +1,6 @@
 package com.elegion.tracktor.ui.results;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,13 +10,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.elegion.tracktor.R;
+import com.elegion.tracktor.event.ChangeCommentEvent;
 import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
 import com.elegion.tracktor.event.OpenResultEvent;
@@ -76,12 +81,10 @@ public class ResultsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mResultsAdapter = new ResultsAdapter();
         mResultsViewModel.getTracks().observe(this, tracks -> {
-            if (tracks !=null && tracks.size()>0 ){
+            if (tracks != null && tracks.size() > 0) {
                 mResultsAdapter.submitList(tracks);
                 Log.d(TAG, "onActivityCreated: load tracks");
-            }
-
-            else{
+            } else {
                 mRecyclerView.setVisibility(View.GONE);
                 tvEmptyList.setVisibility(View.VISIBLE);
             }
@@ -98,14 +101,24 @@ public class ResultsFragment extends Fragment {
 
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void changeExpand(ExpandViewEvent event){
-        mResultsViewModel.onExpandedStateChange(event);
-        Log.d(TAG, "changeExpand: " + event.getTrackId());
+    public void updateComment(ChangeCommentEvent event){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Введите комментарий.");
+
+        final EditText input = new EditText(getActivity());
+        input.setText(event.getComment());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("Отправить", (dialog, which) -> {
+            if(!TextUtils.isEmpty(input.getText())){
+                mResultsViewModel.updateTrackComment(event.getTrackId(), input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Отмена", (dialog, which) -> dialog.cancel());
+        builder.show();
     }
-
-
 
     @Override
     public void onDetach() {
