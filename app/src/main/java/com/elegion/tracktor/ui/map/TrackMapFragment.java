@@ -3,8 +3,10 @@ package com.elegion.tracktor.ui.map;
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
@@ -129,9 +131,10 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
             addMarker(route.get(route.size() - 1), getString(R.string.end));
 
             takeMapScreenshot(route, bitmap -> {
+                final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
                 String base64image = ScreenshotMaker.toBase64(bitmap);
-                long resultId = mMainViewModel.saveResults(base64image);
+                long resultId = mMainViewModel.saveResults(base64image, preferences);
                 ResultsActivity.start(getContext(), resultId);
             });
         }

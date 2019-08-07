@@ -11,6 +11,7 @@ import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.di.RepositoryModule;
 import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
+import com.elegion.tracktor.event.SortEvent;
 import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.RealmResults;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
@@ -42,6 +44,7 @@ public class ResultsViewModel extends ViewModel {
 
     private final Scope mScope;
 
+    private int mField = 1;
 
 
     public ResultsViewModel() {
@@ -91,11 +94,11 @@ public class ResultsViewModel extends ViewModel {
     public void loadEnergy(long trackId, int activityType, SharedPreferences preferences) {
         Track track = mRepository.getItem(trackId);
         double weight = Double.parseDouble(preferences.getString("weight", "1"));
-        double energy = track.getDuration() * (activityType+1) *weight;
+        double energy = track.getDuration() * (activityType + 1) * weight;
         mEnergy.postValue(StringUtil.getEnergyText(energy));
     }
 
-    public void updateTrackComment(long trackId, String string){
+    public void updateTrackComment(long trackId, String string) {
         Track track = mRepository.getItem(trackId);
         track.setComment(string);
         mRepository.updateItem(track);
@@ -104,17 +107,23 @@ public class ResultsViewModel extends ViewModel {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onExpandedStateChange(ExpandViewEvent event){
+    public void onExpandedStateChange(ExpandViewEvent event) {
         Track track = mRepository.getItem(event.getTrackId());
         track.setExpanded(!track.isExpanded());
         mRepository.updateItem(track);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void deleteTrack(DeleteTrackEvent event){
+    public void deleteTrack(DeleteTrackEvent event) {
         mRepository.deleteItem(event.getTrackId());
     }
 
+
+    public void sortTracks() {
+        RealmResults<Track> tracks = mRepository.sortByField();
+        Log.d("Debug", "sortTracks: " + tracks.size());
+        mTracks.postValue(tracks);
+    }
 
     @Override
     protected void onCleared() {
@@ -123,8 +132,27 @@ public class ResultsViewModel extends ViewModel {
         super.onCleared();
     }
 
-    public void createRandomTrack(){
-        mRepository.createAndInsertTrackFrom(123,123.00,"");
 
-    }
 }
+//        if (mField != 3) {
+//            mField++;
+//        } else {
+//            mField = 1;
+//        }
+//        List<Track> tracks = event.getTracks();
+//        switch (mField) {
+//            case 1: {
+//                Collections.sort(tracks, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+//                break;
+//            }
+//
+//            case 3: {
+//                Collections.sort(tracks, (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
+//                break;
+//            }
+//
+//            case 2: {
+//                Collections.sort(tracks, new DurationComparator());
+//                break;
+//            }
+//        }

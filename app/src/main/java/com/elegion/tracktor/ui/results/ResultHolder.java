@@ -29,30 +29,28 @@ import toothpick.Toothpick;
  */
 public class ResultHolder extends RecyclerView.ViewHolder {
 
+    private final View conLayout;
     private View mView;
     private TextView mDistanceText;
     private TextView mDuration;
     private TextView mDate;
-    private LinearLayout mLayout;
     private TextView mEnergyText;
     private TextView mSpeedText;
     private TextView mAtivityText;
     private TextView mCommentText;
-    private Button mChangeCommentBtn;
-    private Button mShareBtn;
 
 
     public ResultHolder(View view) {
         super(view);
         mView = view;
-        mDistanceText = view.findViewById(R.id.tv_distance);
-        mDate = view.findViewById(R.id.tv_date);
-        mDuration = view.findViewById(R.id.tv_duration);
-        mLayout = view.findViewById(R.id.sub_item);
-        mEnergyText = view.findViewById(R.id.tv_energy);
-        mSpeedText = view.findViewById(R.id.tv_speed);
-        mAtivityText = view.findViewById(R.id.tv_activityType);
-        mCommentText = view.findViewById(R.id.tv_comment);
+        mDistanceText = view.findViewById(R.id.li_dist_con);
+        mDate = view.findViewById(R.id.li_tv_date);
+        mDuration = view.findViewById(R.id.li_dur_con);
+        conLayout = view.findViewById(R.id.sub_item_con);
+        mEnergyText = view.findViewById(R.id.li_energy_con);
+        mSpeedText = view.findViewById(R.id.li_speed_con);
+        mAtivityText = view.findViewById(R.id.li_type_con);
+        mCommentText = view.findViewById(R.id.li_com_con);
 
     }
 
@@ -65,12 +63,13 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         mDistanceText.setText(StringUtil.getDistanceText(track.getDistance()));
         mDate.setText(StringUtil.getDateText(track.getDate()));
         mDuration.setText(StringUtil.getTimeText(track.getDuration()));
-
+        mAtivityText.setText(track.getType());
+        mEnergyText.setText(StringUtil.getEnergyText(track.getEnergy()));
         mCommentText.setText(track.getComment());
         mSpeedText.setText(StringUtil.getSpeedText(track.getDistance() / track.getDuration()));
 
         boolean expanded = track.isExpanded();
-        mLayout.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        conLayout.setVisibility(expanded ? View.VISIBLE : View.GONE);
 
 
 //        mView.setOnClickListener(v -> {

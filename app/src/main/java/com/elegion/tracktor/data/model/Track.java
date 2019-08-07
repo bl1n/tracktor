@@ -10,6 +10,7 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Track extends RealmObject {
 
+    @PrimaryKey
     private long id;
 
     private Date date;
@@ -22,9 +23,27 @@ public class Track extends RealmObject {
 
     private String comment;
 
+    private double energy;
 
+    private String type;
 
     private boolean expanded;
+
+    public double getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(double energy) {
+        this.energy = energy;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public boolean isExpanded() {
         return expanded;

@@ -1,5 +1,7 @@
 package com.elegion.tracktor.data;
 
+import android.util.Log;
+
 import com.elegion.tracktor.data.model.Track;
 
 import java.util.Date;
@@ -9,6 +11,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * @author Azret Magometov
@@ -77,20 +81,28 @@ public class RealmRepository implements IRepository<Track> {
         mRealm.commitTransaction();
     }
 
-    public long createAndInsertTrackFrom(long duration, double distanse, String base64image) {
+    public long createAndInsertTrackFrom(long duration, double distance, String base64image, double weight) {
         Track track = new Track();
 
 //        mRealm.beginTransaction();
 //        Track track = mRealm.createObject(Track.class, sPrimaryId.incrementAndGet());
-        track.setDistance(distanse);
+        track.setDistance(distance);
         track.setDuration(duration);
         track.setImageBase64(base64image);
         track.setDate(new Date());
         track.setComment("Введите комментарий");
         track.setExpanded(false);
+        track.setType("Ходьба");
+        track.setEnergy(track.getDuration() * weight);
 //        mRealm.commitTransaction();
 //        return sPrimaryId.longValue();
 
         return insertItem(track);
+    }
+
+    public RealmResults<Track> sortByField() {
+        RealmResults<Track> tracks = mRealm.where(Track.class).sort("distance", Sort.DESCENDING).findAll();
+        Log.d("Debug", "sortByField: "+ tracks.size());
+        return tracks;
     }
 }

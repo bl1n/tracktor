@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
 
 import com.elegion.tracktor.common.SingleFragmentActivity;
 import com.elegion.tracktor.event.OpenResultEvent;
@@ -53,4 +54,6 @@ public class ResultsActivity extends SingleFragmentActivity {
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
+
+
 }

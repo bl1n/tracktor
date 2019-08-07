@@ -39,7 +39,7 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
     @NonNull
     @Override
     public ResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.li_track, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.li_track_con, parent, false);
         return new ResultHolder(view);
     }
 
@@ -48,7 +48,7 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
         Track track = getItem(position);
         holder.bind(track);
 
-        holder.itemView.findViewById(R.id.btn_delete).setOnClickListener(v -> {
+        holder.itemView.findViewById(R.id.li_btn_del_con).setOnClickListener(v -> {
             EventBus.getDefault().post(new DeleteTrackEvent(track.getId()));
             notifyDataSetChanged();
         });
@@ -57,9 +57,9 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
             notifyItemChanged(position);
         });
 
-        holder.itemView.findViewById(R.id.btn_change_comment).setOnClickListener(v->{
+        holder.itemView.findViewById(R.id.li_btn_change_com_con).setOnClickListener(v->{
             EventBus.getDefault().post(new ChangeCommentEvent(track.getComment(), track.getId()));
-            notifyItemChanged(position);
+            notifyDataSetChanged();
         });
 //        mChangeCommentBtn.setOnClickListener(v -> {
 //            // TODO: 02.08.2019

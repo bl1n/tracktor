@@ -2,6 +2,7 @@ package com.elegion.tracktor.ui.map;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.SharedPreferences;
 
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.IRepository;
@@ -99,8 +100,9 @@ public class MainViewModel extends ViewModel {
         mDistanceText.setValue("");
     }
 
-    public long saveResults(String base54image) {
+    public long saveResults(String base54image, SharedPreferences preferences) {
 
-        return mRealmRepository.createAndInsertTrackFrom(mDurationRaw, mDistanceRaw, base54image);
+        double weight = Double.parseDouble(preferences.getString("weight", "1"));
+        return mRealmRepository.createAndInsertTrackFrom(mDurationRaw, mDistanceRaw, base54image, weight);
     }
 }
