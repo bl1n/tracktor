@@ -100,9 +100,7 @@ public class RealmRepository implements IRepository<Track> {
         return insertItem(track);
     }
 
-    public RealmResults<Track> sortByField() {
-        RealmResults<Track> tracks = mRealm.where(Track.class).sort("distance", Sort.DESCENDING).findAll();
-        Log.d("Debug", "sortByField: "+ tracks.size());
-        return tracks;
+    public void sortByField() {
+        mRealm.where(Track.class).sort("distance", Sort.DESCENDING);
     }
 }

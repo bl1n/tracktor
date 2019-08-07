@@ -147,6 +147,7 @@ public class ResultsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         mResultsViewModel.sortTracks();
+        mResultsAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 

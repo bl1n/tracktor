@@ -11,18 +11,17 @@ import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.di.RepositoryModule;
 import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
-import com.elegion.tracktor.event.SortEvent;
 import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.RealmResults;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
@@ -120,9 +119,7 @@ public class ResultsViewModel extends ViewModel {
 
 
     public void sortTracks() {
-        RealmResults<Track> tracks = mRepository.sortByField();
-        Log.d("Debug", "sortTracks: " + tracks.size());
-        mTracks.postValue(tracks);
+        Collections.sort(mTracks.getValue(), (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
     }
 
     @Override

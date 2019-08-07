@@ -1,5 +1,8 @@
 package com.elegion.tracktor.ui.results;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
@@ -15,6 +18,12 @@ import com.elegion.tracktor.event.ExpandViewEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
+
+import io.realm.OrderedCollectionChangeSet;
+import io.realm.OrderedRealmCollectionChangeListener;
+import io.realm.RealmResults;
 
 public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
 
@@ -61,14 +70,11 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
             EventBus.getDefault().post(new ChangeCommentEvent(track.getComment(), track.getId()));
             notifyDataSetChanged();
         });
-//        mChangeCommentBtn.setOnClickListener(v -> {
-//            // TODO: 02.08.2019
-//        });
-//
-//        mShareBtn.setOnClickListener(v -> {
-//
-//        });
+
+
     }
+
+
 
 
 

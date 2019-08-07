@@ -8,6 +8,7 @@ import android.view.Menu;
 
 import com.elegion.tracktor.common.SingleFragmentActivity;
 import com.elegion.tracktor.event.OpenResultEvent;
+import com.elegion.tracktor.event.StartActivityEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,6 +42,13 @@ public class ResultsActivity extends SingleFragmentActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onOpenResultEvent(OpenResultEvent event) {
         changeFragment(ResultsDetailsFragment.newInstance(event.getTrackId()));
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void shareFromHolder(StartActivityEvent event){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/jpeg");
+        intent.putExtra(Intent.EXTRA_TEXT, event.getValue());
+        startActivity(Intent.createChooser(intent, "Результаты маршрута"));
     }
 
     @Override

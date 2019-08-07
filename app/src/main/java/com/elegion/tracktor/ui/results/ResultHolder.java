@@ -1,5 +1,6 @@
 package com.elegion.tracktor.ui.results;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.elegion.tracktor.event.ChangeCommentEvent;
 import com.elegion.tracktor.event.DeleteTrackEvent;
 import com.elegion.tracktor.event.ExpandViewEvent;
 import com.elegion.tracktor.event.OpenResultEvent;
+import com.elegion.tracktor.event.StartActivityEvent;
 import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,6 +40,7 @@ public class ResultHolder extends RecyclerView.ViewHolder {
     private TextView mSpeedText;
     private TextView mAtivityText;
     private TextView mCommentText;
+    private Button shareBtn;
 
 
     public ResultHolder(View view) {
@@ -51,6 +54,7 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         mSpeedText = view.findViewById(R.id.li_speed_con);
         mAtivityText = view.findViewById(R.id.li_type_con);
         mCommentText = view.findViewById(R.id.li_com_con);
+        shareBtn = view.findViewById(R.id.li_btn_share_con);
 
     }
 
@@ -72,13 +76,18 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         conLayout.setVisibility(expanded ? View.VISIBLE : View.GONE);
 
 
-//        mView.setOnClickListener(v -> {
-//            EventBus.getDefault().post(new ExpandViewEvent(track.getId()));
-//        });
+
 
         mView.setOnLongClickListener(v -> {
             EventBus.getDefault().post(new OpenResultEvent(track.getId()));
             return false;
+        });
+        shareBtn.setOnClickListener(v -> {
+            String value = "Время: " + mDuration.getText() + "\nРасстояние: " + mDistanceText.getText()
+                    + "\nСкорость: " + mSpeedText.getText() + "\nЗатрачено энергии: " + mEnergyText.getText() + "\nКомментарий: " + mCommentText.getText();
+
+            EventBus.getDefault().post(new StartActivityEvent(value));
+
         });
 
 
