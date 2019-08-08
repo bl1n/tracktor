@@ -132,7 +132,8 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
             takeMapScreenshot(route, bitmap -> {
                 final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-                String base64image = ScreenshotMaker.toBase64(bitmap);
+                String compress = preferences.getString("compress", String.valueOf(100));
+                String base64image = ScreenshotMaker.toBase64(bitmap, compress);
                 long resultId = mMainViewModel.saveResults(base64image, preferences);
                 ResultsActivity.start(getContext(), resultId);
             });
