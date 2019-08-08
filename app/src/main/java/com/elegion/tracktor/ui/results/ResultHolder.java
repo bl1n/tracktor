@@ -1,30 +1,17 @@
 package com.elegion.tracktor.ui.results;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
-import com.elegion.tracktor.di.ModelsModule;
-import com.elegion.tracktor.event.ChangeCommentEvent;
-import com.elegion.tracktor.event.DeleteTrackEvent;
-import com.elegion.tracktor.event.ExpandViewEvent;
 import com.elegion.tracktor.event.OpenResultEvent;
 import com.elegion.tracktor.event.StartActivityEvent;
 import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
-
-import javax.inject.Inject;
-
-import toothpick.Scope;
-import toothpick.Toothpick;
 
 /**
  * @author Azret Magometov

@@ -1,8 +1,6 @@
 package com.elegion.tracktor.di;
 
 import com.elegion.tracktor.App;
-import com.elegion.tracktor.data.IRepository;
-import com.elegion.tracktor.data.RealmRepository;
 
 import toothpick.config.Module;
 

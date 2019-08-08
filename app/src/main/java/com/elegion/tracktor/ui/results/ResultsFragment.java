@@ -146,9 +146,21 @@ public class ResultsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mResultsViewModel.sortTracks();
-        mResultsAdapter.notifyDataSetChanged();
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.actionDirection: {
+                mResultsViewModel.changeSortOrder();
+                return true;
+            }
+            case R.id.actionField: {
+                mResultsViewModel.changeSortBy();
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+
+
     }
 
 

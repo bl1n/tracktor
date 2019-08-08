@@ -45,6 +45,7 @@ public class RealmRepository implements IRepository<Track> {
         return mRealm.where(Track.class).findAll();
     }
 
+
     @Override
     public long insertItem(Track track) {
         track.setId(sPrimaryId.incrementAndGet());
@@ -100,7 +101,24 @@ public class RealmRepository implements IRepository<Track> {
         return insertItem(track);
     }
 
-    public void sortByField() {
-        mRealm.where(Track.class).sort("distance", Sort.DESCENDING);
+    @Override
+    public List<Track> getAll(int sortOrder, int sortBy){
+        RealmResults realmResults = mRealm.where(Track.class).findAll();
+        Sort realmSortOrder = sortOrder == IRepository.SORT_ORDER_ASC? Sort.ASCENDING : Sort.DESCENDING;
+        switch (sortBy){
+            case IRepository.SORT_BY_DURATION:{
+                realmResults = realmResults.sort("duration", realmSortOrder);
+                break;
+            }
+            case IRepository.SORT_BY_DISTANCE:{
+                realmResults = realmResults.sort("distance", realmSortOrder);
+                break;
+            }
+            default:{
+                realmResults = realmResults.sort("date", realmSortOrder);
+                break;
+            }
+        }
+        return mRealm.copyFromRealm(realmResults);
     }
 }

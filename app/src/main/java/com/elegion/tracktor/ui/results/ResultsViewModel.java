@@ -3,9 +3,9 @@ package com.elegion.tracktor.ui.results;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.elegion.tracktor.App;
+import com.elegion.tracktor.data.IRepository;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.di.RepositoryModule;
@@ -29,6 +29,14 @@ import toothpick.Toothpick;
  * @author Azret Magometov
  */
 public class ResultsViewModel extends ViewModel {
+    public static final int SORT_ORDER_ASC = 1;
+    public static final int SORT_ORDER_DESC = 2;
+    public static final int SORT_BY_START_DATE = 1;
+    public static final int SORT_BY_DURATION = 2;
+    public static final int SORT_BY_DISTANCE = 3;
+
+    private int mRepositorySortOrder;
+    private int mRepositorySortBy;
 
     @Inject
     RealmRepository mRepository;
@@ -41,6 +49,13 @@ public class ResultsViewModel extends ViewModel {
 
     private MutableLiveData<String> mEnergy = new MutableLiveData<>();
 
+    private MutableLiveData<Integer> mSortOrder = new MutableLiveData<>();// add observer to change icons
+
+    private MutableLiveData<Integer> mSortBy = new MutableLiveData<>();// add observer to change icons
+
+
+
+
     private final Scope mScope;
 
     private int mField = 1;
@@ -52,13 +67,44 @@ public class ResultsViewModel extends ViewModel {
         mScope.installModules(new RepositoryModule());
         Toothpick.inject(this, mScope);
         deleted.postValue(false);
+
     }
 
     //tracks
     public void loadTracks() {
-        if (mTracks.getValue() == null || mTracks.getValue().isEmpty()) {
-            mTracks.postValue(mRepository.getAll());
+        mTracks.postValue(mRepository.getAll(mRepositorySortOrder, mRepositorySortBy));
+    }
+
+    public void changeSortOrder(){
+        if (mRepositorySortOrder == IRepository.SORT_ORDER_ASC) {
+            mRepositorySortOrder = IRepository.SORT_ORDER_DESC;
+            mSortOrder.postValue(SORT_ORDER_DESC);
+        } else{
+            mRepositorySortOrder = IRepository.SORT_ORDER_ASC;
+            mSortOrder.postValue(SORT_ORDER_ASC);
         }
+        loadTracks();
+    }
+
+    public void changeSortBy(){
+        switch (mRepositorySortBy){
+            case IRepository.SORT_BY_START_DATE:{
+                mRepositorySortBy = IRepository.SORT_BY_DURATION;
+                mSortBy.postValue(SORT_BY_DURATION);
+                break;
+            }
+            case IRepository.SORT_BY_DURATION:{
+                mRepositorySortBy = IRepository.SORT_BY_DISTANCE;
+                mSortBy.postValue(SORT_BY_DISTANCE);
+                break;
+            }
+            default:{
+                mRepositorySortBy = IRepository.SORT_BY_START_DATE;
+                mSortBy.postValue(SORT_BY_START_DATE);
+                break;
+            }
+        }
+        loadTracks();
     }
 
     public MutableLiveData<List<Track>> getTracks() {
@@ -119,7 +165,8 @@ public class ResultsViewModel extends ViewModel {
 
 
     public void sortTracks() {
-        Collections.sort(mTracks.getValue(), (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
+        List<Track> value = mTracks.getValue();
+        Collections.sort(value, (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel;
 import android.content.SharedPreferences;
 
 import com.elegion.tracktor.App;
-import com.elegion.tracktor.data.IRepository;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.di.RepositoryModule;
 import com.elegion.tracktor.event.AddPositionToRouteEvent;

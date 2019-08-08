@@ -1,7 +1,6 @@
 package com.elegion.tracktor.ui.map;
 
 import android.Manifest;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
