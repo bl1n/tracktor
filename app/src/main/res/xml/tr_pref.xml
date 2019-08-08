@@ -3,12 +3,19 @@
     android:title="@string/title_activity_preference">
 
     <ListPreference
-        android:defaultValue="@string/pref_default_value_unit"
+        android:defaultValue="1"
         android:dialogTitle="@string/dialog_title_distance_unit"
         android:entries="@array/entries_list_preference_unit"
         android:entryValues="@array/entryvalues_list_preference_unit"
         android:key="@string/pref_key_unit"
         android:title="@string/title_distance_unit" />
+    <ListPreference
+        android:defaultValue="100"
+        android:dialogTitle="@string/dialog_title_compress"
+        android:entries="@array/entries_list_preference_compress"
+        android:entryValues="@array/entryvalues_list_preference_compress"
+        android:key="@string/pref_key_compress"
+        android:title="@string/title_distance_compress" />
 
     <ListPreference
         android:defaultValue="@string/pref_default_value_shutdown"

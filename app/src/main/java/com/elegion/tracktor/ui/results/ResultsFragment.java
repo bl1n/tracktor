@@ -17,25 +17,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.elegion.tracktor.R;
-import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.event.ChangeCommentEvent;
-import com.elegion.tracktor.event.SortEvent;
+import com.elegion.tracktor.event.ExpandViewEvent;
 import com.elegion.tracktor.util.CustomViewModelFactory;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ResultsFragment extends Fragment {
@@ -103,6 +98,8 @@ public class ResultsFragment extends Fragment {
 
         mRecyclerView.setHasFixedSize(true);
 
+        mResultsViewModel.createExample();
+
 
     }
 
@@ -123,6 +120,11 @@ public class ResultsFragment extends Fragment {
         });
         builder.setNegativeButton("Отмена", (dialog, which) -> dialog.cancel());
         builder.show();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void  expandHolder(ExpandViewEvent event){
+        mResultsViewModel.expandHolder(event);
+        mResultsAdapter.notifyItemChanged(event.getPosition());
     }
 
     @Override

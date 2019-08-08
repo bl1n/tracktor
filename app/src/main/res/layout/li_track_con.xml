@@ -8,7 +8,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,11 +99,24 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/sub_item_con"
-        android:layout_width="412dp"
-        android:layout_height="74dp"
+        android:layout_width="413dp"
+        android:layout_height="118dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <Button
+            android:id="@+id/edit_btn"
+            android:layout_width="390dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Редактировать"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/li_energy_con"
@@ -146,9 +159,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="36dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_comment" />
 
         <TextView
@@ -156,28 +169,30 @@
             android:layout_width="191dp"
             android:layout_height="40dp"
             android:layout_marginStart="56dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="36dp"
             android:text="Комментарий отсутствует"
             android:textSize="12sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/li_btn_del_con"
             android:layout_width="148dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="4dp"
             android:text="Удалить"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/li_btn_share_con" />
 
         <Button
             android:id="@+id/li_btn_share_con"
             android:layout_width="149dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
             android:text="Поделиться"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -193,4 +208,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

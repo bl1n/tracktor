@@ -110,7 +110,8 @@ public class ResultsDetailsFragment extends Fragment {
             String time = StringUtil.getTimeText(track.getDuration());
             mTimeText.setText(time);
             mDistanceText.setText(distance);
-            mImage = ScreenshotMaker.fromBase64(track.getImageBase64());
+            String compress = preferences.getString("compress", String.valueOf(100));
+            mImage = ScreenshotMaker.fromBase64(track.getImageBase64(),compress);
             mScreenshotImage.setImageBitmap(mImage);
             tvDate.setText(StringUtil.getDateText(track.getDate()));
             mSpeed.setText(StringUtil.getSpeedText(track.getDistance() / track.getDuration()));

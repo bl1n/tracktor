@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 
 public class ScreenshotMaker {
 
+
     public static Bitmap makeScreenshot(View view) {
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
@@ -21,9 +22,9 @@ public class ScreenshotMaker {
         return Base64.encodeToString(getBytes(bitmap), Base64.DEFAULT);
     }
 
-    public static Bitmap fromBase64(String base64) {
+    public static Bitmap fromBase64(String base64, String compress) {
         byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return BitmapFactory.decodeByteArray(decodedString, Integer.parseInt(compress), decodedString.length);
     }
 
     private static byte[] getBytes(Bitmap bm) {

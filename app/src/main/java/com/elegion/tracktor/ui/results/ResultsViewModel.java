@@ -3,6 +3,7 @@ package com.elegion.tracktor.ui.results;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.IRepository;
@@ -148,19 +149,25 @@ public class ResultsViewModel extends ViewModel {
         track.setComment(string);
         mRepository.updateItem(track);
         mTrack.postValue(track);
+        loadTracks();
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onExpandedStateChange(ExpandViewEvent event) {
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void expandHolder(ExpandViewEvent event) {
         Track track = mRepository.getItem(event.getTrackId());
         track.setExpanded(!track.isExpanded());
         mRepository.updateItem(track);
+        if(track.isExpanded()){
+            Log.d("Debug", "expandHolder: ");
+        }
+        loadTracks();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deleteTrack(DeleteTrackEvent event) {
         mRepository.deleteItem(event.getTrackId());
+        loadTracks();
     }
 
 
@@ -176,27 +183,9 @@ public class ResultsViewModel extends ViewModel {
         super.onCleared();
     }
 
+    public void createExample(){
+        mRepository.createAndInsertTrackFrom(123123, 123," ",12);
+    }
+
 
 }
-//        if (mField != 3) {
-//            mField++;
-//        } else {
-//            mField = 1;
-//        }
-//        List<Track> tracks = event.getTracks();
-//        switch (mField) {
-//            case 1: {
-//                Collections.sort(tracks, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-//                break;
-//            }
-//
-//            case 3: {
-//                Collections.sort(tracks, (o1, o2) -> o1.getDistance().compareTo(o2.getDistance()));
-//                break;
-//            }
-//
-//            case 2: {
-//                Collections.sort(tracks, new DurationComparator());
-//                break;
-//            }
-//        }

@@ -2,13 +2,30 @@
 <resources>
 
     <string-array name="entries_list_preference_unit">
-        <item>Километры</item>
+        <item>Метры</item>
         <item>Мили</item>
+        <item>Километры</item>
+        <item>Футы</item>
     </string-array>
 
     <string-array name="entryvalues_list_preference_unit">
         <item>1</item>
         <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="entries_list_preference_compress">
+        <item>100%%</item>
+        <item>75%%</item>
+        <item>50%%</item>
+        <item>25%%</item>
+    </string-array>
+
+    <string-array name="entryvalues_list_preference_compress">
+        <item>100</item>
+        <item>75</item>
+        <item>50</item>
+        <item>25</item>
     </string-array>
 
     <string-array name="entries_list_preference_shutdown">

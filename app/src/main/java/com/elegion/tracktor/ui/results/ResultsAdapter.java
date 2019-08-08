@@ -62,7 +62,7 @@ public class ResultsAdapter extends ListAdapter<Track, ResultHolder> {
             notifyDataSetChanged();
         });
         holder.itemView.setOnClickListener(v->{
-            EventBus.getDefault().post(new ExpandViewEvent(track.getId()));
+            EventBus.getDefault().post(new ExpandViewEvent(track.getId(), position));
             notifyItemChanged(position);
         });
 

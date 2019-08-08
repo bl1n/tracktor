@@ -28,6 +28,7 @@ public class ResultHolder extends RecyclerView.ViewHolder {
     private TextView mAtivityText;
     private TextView mCommentText;
     private Button shareBtn;
+    private Button mEditBtn;
 
 
     public ResultHolder(View view) {
@@ -42,6 +43,7 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         mAtivityText = view.findViewById(R.id.li_type_con);
         mCommentText = view.findViewById(R.id.li_com_con);
         shareBtn = view.findViewById(R.id.li_btn_share_con);
+        mEditBtn = view.findViewById(R.id.edit_btn);
 
     }
 
@@ -65,9 +67,8 @@ public class ResultHolder extends RecyclerView.ViewHolder {
 
 
 
-        mView.setOnLongClickListener(v -> {
+        mEditBtn.setOnClickListener(v -> {
             EventBus.getDefault().post(new OpenResultEvent(track.getId()));
-            return false;
         });
         shareBtn.setOnClickListener(v -> {
             String value = "Время: " + mDuration.getText() + "\nРасстояние: " + mDistanceText.getText()
@@ -76,6 +77,7 @@ public class ResultHolder extends RecyclerView.ViewHolder {
             EventBus.getDefault().post(new StartActivityEvent(value));
 
         });
+
 
 
     }
