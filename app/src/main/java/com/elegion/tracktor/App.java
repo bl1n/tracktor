@@ -1,6 +1,7 @@
 package com.elegion.tracktor;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.elegion.tracktor.di.AppModule;
 
@@ -15,11 +16,13 @@ import toothpick.smoothie.module.SmoothieApplicationModule;
 
 public class App extends Application {
     private static Scope sAppScope;
+    private static Context sContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        sContext = this;
         Realm.init(this);
 
 
@@ -31,6 +34,11 @@ public class App extends Application {
         sAppScope = Toothpick.openScope(App.class);
         sAppScope.installModules(new SmoothieApplicationModule(this), new AppModule(this));
     }
+
+    public static Context getContext(){
+        return sContext;
+    }
+
 
 
 }

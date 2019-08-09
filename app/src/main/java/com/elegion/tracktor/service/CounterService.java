@@ -102,6 +102,8 @@ public class CounterService extends Service {
             }
         }
     };
+    private SharedPreferences mPreferences;
+    private String mUnit;
 
     private boolean positionChanged(LatLng newPosition) {
         return mLastLocation.getLongitude() != newPosition.longitude || mLastLocation.getLatitude() != newPosition.latitude;
@@ -140,8 +142,10 @@ public class CounterService extends Service {
 
             startTimer();
 
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            mShutDownDuration = Long.valueOf(preferences.getString(getString(R.string.pref_key_shutdown), "-1"));
+            mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            mUnit = mPreferences.getString("unit", "");
+
+            mShutDownDuration = Long.valueOf(mPreferences.getString(getString(R.string.pref_key_shutdown), "-1"));
 
         } else {
             Toast.makeText(this, R.string.permissions_denied, Toast.LENGTH_SHORT).show();
@@ -158,7 +162,6 @@ public class CounterService extends Service {
 
     private void onTimerUpdate(long totalSeconds) {
         EventBus.getDefault().post(new UpdateTimerEvent(totalSeconds, mDistance));
-
         Notification notification = buildNotification(StringUtil.getTimeText(totalSeconds), StringUtil.getDistanceText(mDistance));
         mNotificationManager.notify(NOTIFICATION_ID, notification);
 
@@ -237,7 +240,7 @@ public class CounterService extends Service {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetRoute(GetRouteEvent event) {
-        EventBus.getDefault().post(new UpdateRouteEvent(mRoute, mDistance));
+        EventBus.getDefault().post(new UpdateRouteEvent(mRoute, mDistance, mUnit));
     }
 
     public boolean isFirstPoint() {

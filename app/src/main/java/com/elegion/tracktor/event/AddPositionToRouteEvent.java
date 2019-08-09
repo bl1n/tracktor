@@ -8,6 +8,8 @@ public class AddPositionToRouteEvent {
     private LatLng mNewPosition;
     private double mDistance;
 
+
+
     public AddPositionToRouteEvent(LatLng lastPosition, LatLng newPosition, double distance) {
         mLastPosition = lastPosition;
         mNewPosition = newPosition;

@@ -3,8 +3,8 @@
 
     <string-array name="entries_list_preference_unit">
         <item>Метры</item>
-        <item>Мили</item>
         <item>Километры</item>
+        <item>Мили</item>
         <item>Футы</item>
     </string-array>
 

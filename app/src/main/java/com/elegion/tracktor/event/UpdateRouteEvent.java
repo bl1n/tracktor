@@ -9,7 +9,7 @@ public class UpdateRouteEvent {
     private List<LatLng> mRoute;
     private double mDistance;
 
-    public UpdateRouteEvent(List<LatLng> route, double distance) {
+    public UpdateRouteEvent(List<LatLng> route, double distance, String unit) {
         mRoute = route;
         mDistance = distance;
     }
@@ -17,6 +17,7 @@ public class UpdateRouteEvent {
     public List<LatLng> getRoute() {
         return mRoute;
     }
+
 
     public double getDistance() {
         return mDistance;

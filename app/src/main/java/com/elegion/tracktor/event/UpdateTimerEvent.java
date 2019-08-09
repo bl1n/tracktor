@@ -17,4 +17,6 @@ public class UpdateTimerEvent {
     public double getDistance() {
         return mDistance;
     }
+
+
 }

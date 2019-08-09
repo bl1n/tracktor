@@ -98,7 +98,7 @@ public class ResultsFragment extends Fragment {
 
         mRecyclerView.setHasFixedSize(true);
 
-        mResultsViewModel.createExample();
+//        mResultsViewModel.createExample();
 
 
     }
