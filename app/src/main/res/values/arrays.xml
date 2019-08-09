@@ -26,6 +26,14 @@
         <item>50</item>
         <item>25</item>
     </string-array>
+    <string-array name="entries_list_preference_icon_type">
+        <item>Первый тип</item>
+        <item>Второй тип</item>
+    </string-array>
+    <string-array name="entryvalues_list_preference_icon_type">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
     <string-array name="entries_list_preference_track_color">
         <item>Черный</item>
         <item>Красный</item>

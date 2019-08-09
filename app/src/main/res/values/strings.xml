@@ -21,9 +21,11 @@
     <string name="title_activity_preference">Настройки</string>
     <string name="title_distance_unit">Единица измерения</string>
     <string name="title_distance_compress">Сжатие</string>
+    <string name="title_icon_type">Тип иконок</string>
     <string name="title_distance_track_color">Цвет линий</string>
     <string name="dialog_title_distance_unit">Выберите единицу измерения</string>
     <string name="dialog_title_compress">Сжатие</string>
+    <string name="dialog_title_icon_type">Тип иконок</string>
     <string name="dialog_title_track_color">Цвет трэка</string>
     <string name="title_auto_shutdown">Автоотключение</string>
     <string name="title_auto_sex">Пол</string>
@@ -36,6 +38,7 @@
 
     <string name="pref_key_unit">unit</string>
     <string name="pref_key_compress">compress</string>
+    <string name="pref_key_icon_type">iconType</string>
     <string name="pref_key_track_color">trackColor</string>
     <string name="pref_key_shutdown">shutdown</string>
     <string name="pref_key_sex">sex</string>

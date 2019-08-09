@@ -8,7 +8,7 @@ import com.elegion.tracktor.R;
 
 
 //todo create class PreferencesHelper with static methods instead of this class
-public class PolilyneOptionsUtil {
+public class SharedPreferencesHelper {
 
     private static SharedPreferences getPreferences(){
         return PreferenceManager.getDefaultSharedPreferences(App.getContext());
@@ -35,6 +35,11 @@ public class PolilyneOptionsUtil {
 
     public static int getTrackWidthFromPreferences(){
         return Integer.parseInt(getPreferences().getString("trackWidth", "10"));
+    }
+
+    public static int getTrackIcon(){
+        int iconType = Integer.parseInt(getPreferences().getString("iconType", "1"));
+        return iconType==1?R.drawable.ic_action_name:R.drawable.ic_man_name;
     }
 
 

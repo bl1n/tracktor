@@ -19,13 +19,14 @@ import com.elegion.tracktor.event.StartTrackEvent;
 import com.elegion.tracktor.event.StopTrackEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
 import com.elegion.tracktor.ui.results.ResultsActivity;
-import com.elegion.tracktor.util.PolilyneOptionsUtil;
+import com.elegion.tracktor.util.SharedPreferencesHelper;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -107,8 +108,8 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddPositionToRoute(AddPositionToRouteEvent event) {
 
-        int trackColorFromPreferences = PolilyneOptionsUtil.getTrackColorFromPreferences();
-        int trackWidthFromPreferences = PolilyneOptionsUtil.getTrackWidthFromPreferences();
+        int trackColorFromPreferences = SharedPreferencesHelper.getTrackColorFromPreferences();
+        int trackWidthFromPreferences = SharedPreferencesHelper.getTrackWidthFromPreferences();
         mMap.addPolyline(new PolylineOptions()
                 .add(event.getLastPosition(), event.getNewPosition())
                 .color(getResources().getColor(trackColorFromPreferences))
@@ -150,7 +151,9 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
     }
 
     private void addMarker(LatLng position, String text) {
-        mMap.addMarker(new MarkerOptions().position(position).title(text));
+        int icon = SharedPreferencesHelper.getTrackIcon();
+        mMap.addMarker(new MarkerOptions().position(position).title(text)
+                .icon(BitmapDescriptorFactory.fromResource(icon)));
     }
 
     private void takeMapScreenshot(List<LatLng> route, GoogleMap.SnapshotReadyCallback snapshotCallback) {

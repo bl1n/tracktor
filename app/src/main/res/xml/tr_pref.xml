@@ -3,6 +3,7 @@
     android:title="@string/title_activity_preference">
 
 
+
     <ListPreference
         android:defaultValue="1"
         android:dialogTitle="@string/dialog_title_distance_unit"
@@ -17,6 +18,13 @@
         android:entryValues="@array/entryvalues_list_preference_compress"
         android:key="@string/pref_key_compress"
         android:title="@string/title_distance_compress" />
+    <ListPreference
+        android:defaultValue="1"
+        android:dialogTitle="@string/dialog_title_icon_type"
+        android:entries="@array/entries_list_preference_icon_type"
+        android:entryValues="@array/entryvalues_list_preference_icon_type"
+        android:key="@string/pref_key_icon_type"
+        android:title="@string/title_icon_type" />
     <ListPreference
         android:defaultValue="1"
         android:dialogTitle="@string/dialog_title_track_color"
