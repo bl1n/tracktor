@@ -2,7 +2,9 @@ package com.elegion.tracktor.ui.map;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.RealmRepository;
@@ -21,6 +23,8 @@ import javax.inject.Inject;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
+import static com.elegion.tracktor.App.getContext;
+
 public class MainViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> startEnabled = new MutableLiveData<>();
@@ -35,6 +39,9 @@ public class MainViewModel extends ViewModel {
     @Inject
     RealmRepository mRealmRepository;
 
+    private final SharedPreferences mPreferences;
+
+
     @Inject
     public MainViewModel() {
         EventBus.getDefault().register(this);
@@ -43,6 +50,7 @@ public class MainViewModel extends ViewModel {
         final Scope scope = Toothpick.openScopes(App.class, this);
         scope.installModules(new RepositoryModule());
         Toothpick.inject(this, scope);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
     public void switchButtons() {
@@ -99,9 +107,9 @@ public class MainViewModel extends ViewModel {
         mDistanceText.setValue("");
     }
 
-    public long saveResults(String base54image, SharedPreferences preferences) {
+    public long saveResults(String base54image) {
 
-        double weight = Double.parseDouble(preferences.getString("weight", "1"));
+        double weight = Double.parseDouble(mPreferences.getString("weight", "1"));
         return mRealmRepository.createAndInsertTrackFrom(mDurationRaw, mDistanceRaw, base54image, weight);
     }
 }

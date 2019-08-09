@@ -19,6 +19,7 @@ import com.elegion.tracktor.event.StartTrackEvent;
 import com.elegion.tracktor.event.StopTrackEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
 import com.elegion.tracktor.ui.results.ResultsActivity;
+import com.elegion.tracktor.util.PolilyneOptionsUtil;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -54,7 +55,10 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
 
     private GoogleMap mMap;
 
-    @Inject MainViewModel mMainViewModel;
+    @Inject
+    MainViewModel mMainViewModel;
+    private SharedPreferences mPreferences;
+    private String mTrackColor;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -67,7 +71,9 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
         final Scope scope =
                 Toothpick.openScopes(App.class, this);
         scope.installModules(new ModelsModule(this));
-        Toothpick.inject(this,scope);
+        Toothpick.inject(this, scope);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());
+        mTrackColor = mPreferences.getString("trackColor", "#000");
     }
 
     @Override
@@ -100,7 +106,13 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddPositionToRoute(AddPositionToRouteEvent event) {
-        mMap.addPolyline(new PolylineOptions().add(event.getLastPosition(), event.getNewPosition()));
+
+        int trackColorFromPreferences = PolilyneOptionsUtil.getTrackColorFromPreferences();
+        int trackWidthFromPreferences = PolilyneOptionsUtil.getTrackWidthFromPreferences();
+        mMap.addPolyline(new PolylineOptions()
+                .add(event.getLastPosition(), event.getNewPosition())
+                .color(getResources().getColor(trackColorFromPreferences))
+                .width(trackWidthFromPreferences));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(event.getNewPosition(), DEFAULT_ZOOM));
     }
 
@@ -130,12 +142,9 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
             addMarker(route.get(route.size() - 1), getString(R.string.end));
 
             takeMapScreenshot(route, bitmap -> {
-                final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-                String compress = preferences.getString("compress", String.valueOf(100));
-                String base64image = ScreenshotMaker.toBase64(bitmap, compress);
-                long resultId = mMainViewModel.saveResults(base64image, preferences);
-                ResultsActivity.start(getContext(), resultId);
+                String base64image = ScreenshotMaker.toBase64(bitmap);
+                long resultId = mMainViewModel.saveResults(base64image);
+                ResultsActivity.start(App.getContext(), resultId);
             });
         }
     }

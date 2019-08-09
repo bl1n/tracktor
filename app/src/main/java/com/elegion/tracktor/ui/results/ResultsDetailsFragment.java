@@ -75,6 +75,7 @@ public class ResultsDetailsFragment extends Fragment {
 
     private long mTrackId;
     private String mComment;
+    private SharedPreferences mPreferences;
 
     public static ResultsDetailsFragment newInstance(long trackId) {
         Bundle bundle = new Bundle();
@@ -102,7 +103,7 @@ public class ResultsDetailsFragment extends Fragment {
         scope.installModules(new ModelsModule(this));
         Toothpick.inject(this, scope);
 
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         mTrackId = getArguments().getLong(RESULT_ID, 0);
 
         mViewModel.getTrack().observe(this, track -> {
@@ -130,7 +131,7 @@ public class ResultsDetailsFragment extends Fragment {
         mActivityTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mViewModel.loadEnergy(mTrackId, position, preferences);
+                mViewModel.loadEnergy(mTrackId, position, mPreferences);
             }
 
             @Override

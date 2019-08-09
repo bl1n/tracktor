@@ -1,14 +1,28 @@
 package com.elegion.tracktor.util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import com.elegion.tracktor.App;
+
 import java.io.ByteArrayOutputStream;
 
 public class ScreenshotMaker {
+
+    private static Context getContext() {
+        return App.getContext();
+    }
+
+    private static String getCompress() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        return preferences.getString("compress", "");
+    }
 
 
     public static Bitmap makeScreenshot(View view) {
@@ -19,8 +33,8 @@ public class ScreenshotMaker {
         return bitmap;
     }
 
-    public static String toBase64(Bitmap bitmap, String compress) {
-        return Base64.encodeToString(getBytes(bitmap, compress), Base64.DEFAULT);
+    public static String toBase64(Bitmap bitmap) {
+        return Base64.encodeToString(getBytes(bitmap, getCompress()), Base64.DEFAULT);
     }
 
     public static Bitmap fromBase64(String base64) {
