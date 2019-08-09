@@ -15,10 +15,10 @@
         <item>4</item>
     </string-array>
     <string-array name="entries_list_preference_compress">
-        <item>100%%</item>
-        <item>75%%</item>
-        <item>50%%</item>
-        <item>25%%</item>
+        <item>100\uff05</item>
+        <item>75\uff05</item>
+        <item>50\uff05</item>
+        <item>25\uff05</item>
     </string-array>
     <string-array name="entryvalues_list_preference_compress">
         <item>100</item>

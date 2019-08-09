@@ -64,4 +64,6 @@
     <string name="IdTextLabel">Id:</string>
     <string name="speedTextLabel">Скорость:</string>
     <string name="tv_comment">Комментарий</string>
+    <string name="title_user_preferences_category">Настройки пользователя</string>
+    <string name="title_common_preferences_category">Настройки приложения</string>
 </resources>
