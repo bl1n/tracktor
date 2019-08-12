@@ -1,3 +1,1 @@
 # tracktor
-todo:
-screenshotmaker compress
