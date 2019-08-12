@@ -2,7 +2,6 @@ package com.elegion.tracktor.ui.map;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -10,6 +9,7 @@ import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.di.RepositoryModule;
 import com.elegion.tracktor.event.AddPositionToRouteEvent;
+import com.elegion.tracktor.event.SwitchButtonsEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
 import com.elegion.tracktor.event.UpdateTimerEvent;
 import com.elegion.tracktor.util.StringUtil;
@@ -54,6 +54,11 @@ public class MainViewModel extends ViewModel {
     }
 
     public void switchButtons() {
+        startEnabled.setValue(!startEnabled.getValue());
+        stopEnabled.setValue(!stopEnabled.getValue());
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void switchButtonsFromEvent(SwitchButtonsEvent event){
         startEnabled.setValue(!startEnabled.getValue());
         stopEnabled.setValue(!stopEnabled.getValue());
     }

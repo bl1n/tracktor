@@ -63,6 +63,11 @@ public class NotificationHelper {
         PendingIntent contentIntent = PendingIntent.getActivity(
                 App.getContext(), REQUEST_CODE_LAUNCH, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent broadCastIntent = new Intent(App.getContext(), StopTrackReceiver.class);
+        PendingIntent actionIntent = PendingIntent.getBroadcast(App.getContext(),
+                0, broadCastIntent,PendingIntent.FLAG_CANCEL_CURRENT );
+
+
         mNotificationBuilder = new NotificationCompat.Builder(App.getContext(), CHANNEL_ID)
                 .setContentIntent(contentIntent)
                 .setOngoing(true)
@@ -70,6 +75,9 @@ public class NotificationHelper {
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle(App.getContext().getResources().getString(R.string.route_active))
                 .setVibrate(new long[]{0})
+                .setAutoCancel(true)
+                .addAction(R.mipmap.ic_launcher, "Stop", actionIntent)
+
                 .setColor(ContextCompat.getColor(App.getContext(), R.color.colorAccent));
     }
 

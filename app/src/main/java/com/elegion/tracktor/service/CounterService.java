@@ -2,49 +2,34 @@ package com.elegion.tracktor.service;
 
 import android.Manifest;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
-import com.elegion.tracktor.event.AddPositionToRouteEvent;
 import com.elegion.tracktor.event.GetRouteEvent;
-import com.elegion.tracktor.event.StartTrackEvent;
 import com.elegion.tracktor.event.StopBtnClickedEvent;
-import com.elegion.tracktor.event.StopTrackEvent;
-import com.elegion.tracktor.event.UpdateRouteEvent;
-import com.elegion.tracktor.event.UpdateTimerEvent;
-import com.elegion.tracktor.ui.map.MainActivity;
+import com.elegion.tracktor.event.StopTrackFromBREvent;
+import com.elegion.tracktor.event.SwitchButtonsEvent;
 import com.elegion.tracktor.util.StringUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.SphericalUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -62,6 +47,7 @@ public class CounterService extends Service {
     public static final int UPDATE_MIN_DISTANCE = 20;
 
     private Disposable mTimerDisposable;
+
 
 
     private long mShutDownDuration;
@@ -144,10 +130,17 @@ public class CounterService extends Service {
 
         if (mShutDownDuration != -1 && totalSeconds == mShutDownDuration) {
             EventBus.getDefault().post(new StopBtnClickedEvent());
+            EventBus.getDefault().post(new SwitchButtonsEvent());
+
             //configure btns state
             //from notification
         }
 
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void stopTrackFromBR(StopTrackFromBREvent event){
+        mTrackHelper.stopTrackEvent();
+        Log.d("Debug", "stopTrackFromBR: ");
     }
 
     @Override
@@ -174,7 +167,6 @@ public class CounterService extends Service {
     public void onGetRoute(GetRouteEvent event) {
         mTrackHelper.updateRoutEvent();
     }
-
 
 
 }

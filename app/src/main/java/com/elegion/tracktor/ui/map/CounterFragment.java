@@ -77,4 +77,5 @@ public class CounterFragment extends Fragment {
         EventBus.getDefault().post(new StopBtnClickedEvent());
         viewModel.switchButtons();
     }
+
 }
